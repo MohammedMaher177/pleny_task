@@ -7,6 +7,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BrandController } from './brand/brand.controller';
 import { BrandService } from './brand/brand.service';
 import { Brand, BrandSchema } from './brand/entities/brand.entity';
+import { APP_FILTER } from '@nestjs/core';
+import { GlobalExceptionFilter } from './Error-Handler/global-exception.filter';
 
 @Module({
   imports: [
@@ -18,6 +20,13 @@ import { Brand, BrandSchema } from './brand/entities/brand.entity';
     BrandModule,
   ],
   controllers: [AppController, BrandController],
-  providers: [AppService, BrandService],
+  providers: [
+    AppService,
+    BrandService,
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

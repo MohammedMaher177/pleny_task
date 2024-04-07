@@ -22,7 +22,7 @@ export class BrandService {
     return { brands: await this.brandModel.find() };
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} brand`;
   }
 

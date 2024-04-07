@@ -10,6 +10,7 @@ export class CreateBrandDto {
   @Max(new Date().getFullYear())
   yearFounded: number;
   @IsString()
+  @IsNotEmpty()
   headquarters: string;
   @IsNumber()
   @Min(1)

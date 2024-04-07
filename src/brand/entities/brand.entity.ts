@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 export type BrandDocument = HydratedDocument<Brand>;
 @Schema()
-export class Brand {
+export class Brand extends Document{
   @Prop({
     required: [true, 'Brand name is required'],
     trim: true,
