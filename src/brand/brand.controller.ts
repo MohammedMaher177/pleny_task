@@ -33,7 +33,7 @@ export class BrandController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.brandService.remove(+id);
+    return this.brandService.remove(id);
   }
 
   @Get('not-valid')
@@ -43,5 +43,11 @@ export class BrandController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.brandService.findOne(id);
+  }
+
+  @Post('transform')
+  async transformBrands() {
+    await this.brandService.transformAndSaveBrands();
+    return this.brandService.findAll();
   }
 }

@@ -30,11 +30,31 @@ export class BrandService {
     return `This action updates a #${id} brand`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+  remove(id: string) {
+    return this.brandModel.findByIdAndDelete(id);
   }
 
-  find_not_valid() {    
+  find_not_valid() {
     return { brands_not_valid };
+  }
+
+  async transformAndSaveBrands() {
+    try {
+      // const brands = await this.brandModel.find().exec();
+      const brands = brands_not_valid;
+      for (const brand of brands) {
+        const transformedBrand = {
+          brandName: brand.brandName || brand.brand['name'],
+          yearFounded: +brand.yearFounded || +brand.yearCreated || new Date().getFullYear(),
+          headquarters: brand.headquarters || 'not-found',
+          numberOfLocations: +brand.numberOfLocations || 1,
+        };
+        // await this.brandModel.findByIdAndUpdate(brand._id, transformedBrand);
+        await this.brandModel.create(transformedBrand);
+      }
+    } catch (error) {
+      console.error('Error transforming data:', error);
+      return error;
+    }
   }
 }
