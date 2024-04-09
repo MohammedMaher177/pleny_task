@@ -7,6 +7,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
@@ -31,6 +32,14 @@ export class BrandController {
     return this.brandService.update(+id, updateBrandDto);
   }
 
+  @Put('all')
+  update_all() {
+    return this.brandService.update_all();
+  }
+  @Delete()
+  remove_all() {
+    return this.brandService.remove_all();
+  }
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.brandService.remove(id);
@@ -40,14 +49,20 @@ export class BrandController {
   find_not_valid() {
     return this.brandService.find_not_valid();
   }
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.brandService.findOne(id);
-  }
 
   @Post('transform')
   async transformBrands() {
-    await this.brandService.transformAndSaveBrands();
-    return this.brandService.findAll();
+    return await this.brandService.transformAndSaveBrands();
+    // return this.brandService.findAll();
+  }
+
+  @Get('test-date')
+  seedTestData() {
+    return this.brandService.seedTestData();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.brandService.findOne(id);
   }
 }
